@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="NewFeedsApp.Views.ArticlesDetails"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:prism="http://prismlibrary.com"
+    Title="{Binding Title}"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="#EEEEEE">
+    <StackLayout Padding="15,10,15,30">
+        <StackLayout BackgroundColor="White" Spacing="10">
+            <Grid>
+                <ffimageloading:CachedImage
+                    Aspect="AspectFill"
+                    ErrorPlaceholder="ArticlePlaceholder.png"
+                    Source="{Binding SelectedArticle.urlToImage}" />
+                <Label
+                    Padding="10,5,10,10"
+                    FontAttributes="Bold"
+                    FontSize="15"
+                    HorizontalOptions="End"
+                    Text="{Binding SelectedArticle.DisplayingDate}"
+                    TextColor="White"
+                    VerticalOptions="End" />
+            </Grid>
+            <Label
+                Padding="10"
+                CharacterSpacing="1"
+                FontSize="20"
+                LineBreakMode="WordWrap"
+                Text="{Binding SelectedArticle.title}"
+                TextColor="#585858" />
+            <Label
+                Padding="10,5,10,10"
+                FontSize="15"
+                TextColor="#9E9FA1">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <FormattedString.Spans>
+                            <Span Text="By" />
+                            <Span Text=" " />
+                            <Span Text="{Binding SelectedArticle.DisplayingAuthor}" />
+                        </FormattedString.Spans>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label
+                Padding="10,5,10,10"
+                CharacterSpacing="1"
+                FontSize="15"
+                Text="{Binding SelectedArticle.description}"
+                TextColor="#93989C" />
+        </StackLayout>
+        <Button
+            Margin="0,10"
+            Padding="30,15,30,15"
+            BackgroundColor="Black"
+            Command="{Binding OpenWebsiteCommand}"
+            FontSize="18"
+            HorizontalOptions="FillAndExpand"
+            Text="OPEN WEBSITE"
+            TextColor="White" />
+    </StackLayout>
+</ContentPage>

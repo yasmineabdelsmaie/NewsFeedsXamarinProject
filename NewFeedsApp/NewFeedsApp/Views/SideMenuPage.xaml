@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage
+    x:Class="NewFeedsApp.Views.SideMenuPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:views="clr-namespace:NewFeedsApp.Views"
+    prism:ViewModelLocator.AutowireViewModel="True">
+
+    <MasterDetailPage.Master>
+        <ContentPage Title="Menu">
+            <StackLayout BackgroundColor="#EEEEEE">
+                <StackLayout
+                    Padding="25,30,0,35"
+                    BackgroundColor="Transparent"
+                    Orientation="Horizontal"
+                    Spacing="10">
+                    <Image
+                        HeightRequest="70"
+                        HorizontalOptions="End"
+                        Source="profile.png"
+                        VerticalOptions="Center"
+                        WidthRequest="70" />
+                    <StackLayout
+                        HorizontalOptions="Center"
+                        Spacing="1"
+                        VerticalOptions="Center">
+                        <Label FontSize="Medium" Text="Welcome" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="Large"
+                            Text="Tony Roshdy" />
+                    </StackLayout>
+                </StackLayout>
+                <CollectionView x:Name="MenuItemsCollectionView" ItemsSource="{Binding MenuItems}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="20" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout
+                                Padding="35,15,0,0"
+                                Orientation="Horizontal"
+                                Spacing="15">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding BindingContext.MenuItemSelectedCommand, Source={x:Reference MenuItemsCollectionView}}" CommandParameter="{Binding .}" />
+                                </StackLayout.GestureRecognizers>
+                                <Image
+                                    HeightRequest="30"
+                                    HorizontalOptions="End"
+                                    Source="{Binding ImageSource}"
+                                    VerticalOptions="CenterAndExpand"
+                                    WidthRequest="30" />
+                                <Label
+                                    CharacterSpacing="1"
+                                    FontAttributes="Bold"
+                                    Text="{Binding Title}"
+                                    VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ContentPage>
+    </MasterDetailPage.Master>
+    <MasterDetailPage.Detail>
+        <views:ArticlesPage />
+    </MasterDetailPage.Detail>
+</MasterDetailPage>

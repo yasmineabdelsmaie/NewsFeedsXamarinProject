@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="NewFeedsApp.Views.ArticlesPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:prism="http://prismlibrary.com"
+    Title="{Binding Title}"
+    prism:ViewModelLocator.AutowireViewModel="True">
+    <Grid>
+        <StackLayout Padding="10,15" BackgroundColor="#EEEEEE">
+            <CollectionView x:Name="ArticlesCollectionView" ItemsSource="{Binding ArticlesList}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="15" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout BackgroundColor="White" Spacing="0">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BindingContext.ArticleClickedCommand, Source={x:Reference ArticlesCollectionView}}" CommandParameter="{Binding .}" />
+                            </StackLayout.GestureRecognizers>
+                            <ffimageloading:CachedImage
+                                Aspect="AspectFill"
+                                ErrorPlaceholder="ArticlePlaceholder.png"
+                                Source="{Binding urlToImage}" />
+                            <Label
+                                Padding="10"
+                                FontSize="18"
+                                LineBreakMode="WordWrap"
+                                Text="{Binding title}"
+                                TextColor="#7B7B7B" />
+                            <Label
+                                Padding="10,5,10,10"
+                                FontSize="15"
+                                TextColor="#9E9FA1">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <FormattedString.Spans>
+                                            <Span Text="By" />
+                                            <Span Text=" " />
+                                            <Span Text="{Binding DisplayingAuthor}" />
+                                        </FormattedString.Spans>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label
+                                Padding="10,5,10,10"
+                                FontSize="15"
+                                HorizontalOptions="End"
+                                Text="{Binding DisplayingDate}"
+                                TextColor="#9E9FA1" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label
+                        FontSize="Title"
+                        HorizontalOptions="CenterAndExpand"
+                        HorizontalTextAlignment="Center"
+                        Text="There are no articles yet"
+                        TextColor="DarkGray"
+                        VerticalOptions="CenterAndExpand"
+                        VerticalTextAlignment="Center" />
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </StackLayout>
+        <Grid
+            BackgroundColor="#BF173F65"
+            HorizontalOptions="FillAndExpand"
+            IsVisible="{Binding IsLoading}"
+            Opacity="0.7"
+            VerticalOptions="FillAndExpand">
+            <ffimageloading:CachedImage
+                Margin="0"
+                Aspect="AspectFit"
+                HeightRequest="100"
+                HorizontalOptions="Center"
+                Source="LoadingIcon"
+                VerticalOptions="Center"
+                WidthRequest="100" />
+        </Grid>
+    </Grid>
+
+</ContentPage>
